@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Snake from '../components/snake/snake';
+import Apple from '../components/apple/apple';
 import './App.css';
 
 export default class App extends Component {
@@ -8,6 +9,7 @@ export default class App extends Component {
     snake: [{ x: 330, y: 450 }],
     step: 15,
     direction: 'right',
+    apple: {},
   };
 
   componentDidMount() {
@@ -15,11 +17,12 @@ export default class App extends Component {
     window.addEventListener('keydown', this.keyControls);
     this.moveTimer = setInterval(() => {
       this.move();
-    }, 500);
+    }, 200);
   }
 
   componentWillUnmount() {
     clearInterval(this.moveTimer);
+    window.removeEventListener('keydown', this.keyControls);
   }
 
   init = () => {
@@ -31,6 +34,7 @@ export default class App extends Component {
       };
       snake.push(bodyElement);
     }
+    this.generateApple();
     this.setState({ snake });
   };
 
@@ -38,7 +42,7 @@ export default class App extends Component {
     let direction = '';
     switch (e.keyCode) {
       case 37:
-        if (this.state.direction !=='right') direction = 'left';
+        if (this.state.direction !== 'right') direction = 'left';
         else direction = 'right';
         break;
       case 38:
@@ -57,7 +61,7 @@ export default class App extends Component {
     }
     console.log(direction);
     this.setState({ direction });
-  }
+  };
 
   move = () => {
     const snake = this.state.snake;
@@ -95,17 +99,51 @@ export default class App extends Component {
         default:
       }
     };
+    if (
+      snake[0].x === this.state.apple.x &&
+      snake[0].y === this.state.apple.y
+    ) {
+      this.generateApple();
+    } else {
+      snake.pop();
+    }
+
+    for (let i = 1; i < snake.length; i += 1) {
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y)
+        this.finishGame();
+    }
 
     snake.unshift({ x: newHeadX(), y: newHeadY() });
-    snake.pop();
+
     this.setState({ snake });
   };
 
+  generateApple = () => {
+    const randomPosition = () => {
+      return Math.floor(Math.random() * (585 / this.state.step));
+    };
+    const apple = {};
+
+    apple.x = randomPosition() * this.state.step;
+    apple.y = randomPosition() * this.state.step;
+
+    this.setState({ apple });
+  };
+
+  pauseGame = () =>{
+    clearInterval(this.moveTimer);
+  }
+
+  finishGame = () => {
+    clearInterval(this.moveTimer);
+  }
+
   render() {
-    const { snake } = this.state;
+    const { snake, apple } = this.state;
     return (
       <div className="app">
         <div className={'gameField'}>
+          <Apple apple={apple} />
           <Snake snake={snake} />
         </div>
       </div>

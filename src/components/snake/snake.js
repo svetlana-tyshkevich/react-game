@@ -4,7 +4,7 @@ import './snake.css'
 export default class Snake extends Component {
 
     render() {
-        const {length, snake, step, } = this.props;
+        const { snake} = this.props;
         return (
             snake.map((cell, index) => {
                return (

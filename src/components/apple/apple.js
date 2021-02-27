@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './apple.css';
 
 export default class Apple extends Component {
@@ -9,9 +10,13 @@ export default class Apple extends Component {
       <div
         className={'apple'}
         style={{
-          left: `${apple['x']}px`,
-          top: `${apple['y']}px`,
+          left: `${apple.x}px`,
+          top: `${apple.y}px`,
         }}></div>
     );
   }
 }
+
+Apple.propTypes = {
+  apple: PropTypes.array,
+};

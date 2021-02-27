@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-key */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './snake.css';
 
 export default class Snake extends Component {
@@ -17,3 +19,7 @@ export default class Snake extends Component {
     return <div>{snakeBody}</div>;
   }
 }
+
+Snake.propTypes = {
+  snake: PropTypes.object,
+};

@@ -1,6 +1,9 @@
+/* eslint-disable consistent-return */
 import React, { Component } from 'react';
-import Snake from '../components/snake/snake';
-import Apple from '../components/apple/apple';
+
+import Header from '../components/Header';
+import GameField from '../components/GameField';
+import Score from '../components/Score';
 import './App.css';
 
 export default class App extends Component {
@@ -10,6 +13,9 @@ export default class App extends Component {
     step: 15,
     direction: 'right',
     apple: {},
+    score: 0,
+    userName: 'stranger',
+    gameFieldText: '',
   };
 
   componentDidMount() {
@@ -26,9 +32,9 @@ export default class App extends Component {
   }
 
   init = () => {
-    let snake = this.state.snake;
+    const { snake } = this.state;
     for (let i = 1; i < this.state.snakeLength; i += 1) {
-      let bodyElement = {
+      const bodyElement = {
         x: snake[0].x - i * this.state.step,
         y: snake[0].y,
       };
@@ -64,8 +70,9 @@ export default class App extends Component {
   };
 
   move = () => {
-    const snake = this.state.snake;
-    const step = this.state.step;
+    const { snake } = this.state;
+    let { score } = this.state;
+    const { step } = this.state;
     const newHeadX = () => {
       switch (this.state.direction) {
         case 'right':
@@ -100,28 +107,26 @@ export default class App extends Component {
       }
     };
     if (
-      snake[0].x === this.state.apple.x &&
-      snake[0].y === this.state.apple.y
+      snake[0].x === this.state.apple.x
+      && snake[0].y === this.state.apple.y
     ) {
       this.generateApple();
+      score += 1;
     } else {
       snake.pop();
     }
 
     for (let i = 1; i < snake.length; i += 1) {
-      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y)
-        this.finishGame();
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) this.finishGame();
     }
 
     snake.unshift({ x: newHeadX(), y: newHeadY() });
 
-    this.setState({ snake });
+    this.setState({ snake, score });
   };
 
   generateApple = () => {
-    const randomPosition = () => {
-      return Math.floor(Math.random() * (585 / this.state.step));
-    };
+    const randomPosition = () => Math.floor(Math.random() * (585 / this.state.step));
     const apple = {};
 
     apple.x = randomPosition() * this.state.step;
@@ -130,22 +135,29 @@ export default class App extends Component {
     this.setState({ apple });
   };
 
-  pauseGame = () =>{
+  pauseGame = () => {
     clearInterval(this.moveTimer);
-  }
+  };
 
   finishGame = () => {
     clearInterval(this.moveTimer);
-  }
+    this.setState({ gameFieldText: 'Game Over' });
+  };
 
   render() {
-    const { snake, apple } = this.state;
+    const {
+      snake, apple, score, userName, gameFieldText,
+    } = this.state;
     return (
-      <div className="app">
-        <div className={'gameField'}>
-          <Apple apple={apple} />
-          <Snake snake={snake} />
-        </div>
+      <div style={{ backgroundColor: '#80b6f2' }}>
+        <Header userName={userName} />
+        <GameField
+          className={'gameField'}
+          gameFieldText={gameFieldText}
+          apple={apple}
+          snake={snake}
+        />
+        <Score score={score} />
       </div>
     );
   }

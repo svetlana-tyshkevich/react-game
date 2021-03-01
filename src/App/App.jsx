@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import React, { Component } from 'react';
 
-import Header from '../components/Header';
-import GameField from '../components/GameField';
-import Score from '../components/Score';
+import Header from '../components/Header.jsx';
+import GameField from '../components/GameField.jsx';
+import Score from '../components/Score.jsx';
 import './App.css';
 
 export default class App extends Component {
@@ -65,7 +65,6 @@ export default class App extends Component {
         break;
       default:
     }
-    console.log(direction);
     this.setState({ direction });
   };
 

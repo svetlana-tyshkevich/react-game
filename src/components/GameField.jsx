@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Snake from './snake/snake';
-import Apple from './apple/apple';
+import Snake from './snake/snake.jsx';
+import Apple from './apple/apple.jsx';
 import '../App/App.css';
 
 export default class GameField extends Component {

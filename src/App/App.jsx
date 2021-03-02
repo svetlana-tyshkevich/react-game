@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Header from '../components/Header.jsx';
 import GameField from '../components/GameField.jsx';
 import Score from '../components/Score.jsx';
+import GameButtons from '../components/GameButtons.jsx';
 import './App.css';
 
 export default class App extends Component {
@@ -65,13 +66,7 @@ export default class App extends Component {
         else direction = 'up';
         break;
       case 32:
-        if (this.state.pause === false) this.pauseGame();
-        else {
-          this.moveTimer = setInterval(() => {
-            this.move();
-          }, 200);
-          this.setState({ gameFieldText: '', pause: false });
-        }
+        this.pauseGame();
         break;
       default:
     }
@@ -147,8 +142,15 @@ export default class App extends Component {
   };
 
   pauseGame = () => {
-    clearInterval(this.moveTimer);
-    this.setState({ gameFieldText: 'Pause', pause: true });
+    if (this.state.pause === false) {
+      clearInterval(this.moveTimer);
+      this.setState({ gameFieldText: 'Pause', pause: true });
+    } else {
+      this.moveTimer = setInterval(() => {
+        this.move();
+      }, 200);
+      this.setState({ gameFieldText: '', pause: false });
+    }
   };
 
   finishGame = () => {
@@ -158,7 +160,7 @@ export default class App extends Component {
 
   render() {
     const {
-      snake, apple, score, userName, gameFieldText,
+      snake, apple, score, userName, gameFieldText, pause,
     } = this.state;
     return (
       <div
@@ -168,6 +170,7 @@ export default class App extends Component {
         }}>
         <Header userName={userName} />
         <div style={{ display: 'flex' }}>
+          <GameButtons pause={pause} onClick={this.pauseGame} />
           <GameField
             className={'gameField'}
             gameFieldText={gameFieldText}

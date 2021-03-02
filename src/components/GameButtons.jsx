@@ -16,14 +16,16 @@ const styles = {
 
 class GameButtons extends Component {
   render() {
-    const { pause, onClick, classes } = this.props;
+    const {
+      pause, onClickPause, onClickNew, classes,
+    } = this.props;
 
     return (
       <div className={classes.buttonsBox}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={onClickNew}>
           New Game
         </Button>
-        <Button variant="contained" color="secondary" onClick={onClick}>
+        <Button variant="contained" color="secondary" onClick={onClickPause}>
           {pause ? 'Continue' : 'Pause'}
         </Button>
       </div>
@@ -32,9 +34,10 @@ class GameButtons extends Component {
 }
 
 GameButtons.propTypes = {
-  pause: PropTypes.boolean,
+  pause: PropTypes.bool,
   classes: PropTypes.object,
-  onClick: PropTypes.function,
+  onClickPause: PropTypes.func,
+  onClickNew: PropTypes.func,
 };
 
 export default withStyles(styles)(GameButtons);

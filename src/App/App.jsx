@@ -35,6 +35,7 @@ export default class App extends Component {
 
   init = () => {
     const { snake } = this.state;
+    console.log('before', snake);
     for (let i = 1; i < this.state.snakeLength; i += 1) {
       const bodyElement = {
         x: snake[0].x - i * this.state.step,
@@ -44,6 +45,7 @@ export default class App extends Component {
     }
     this.generateApple();
     this.setState({ snake });
+    console.log('after', snake);
   };
 
   keyControls = (e) => {
@@ -158,6 +160,22 @@ export default class App extends Component {
     this.setState({ gameFieldText: 'Game Over' });
   };
 
+  newGame = () => {
+    this.setState({
+      snakeLength: 4,
+      snake: [{ x: 330, y: 450 }],
+      step: 15,
+      direction: 'right',
+      apple: {},
+      score: 0,
+      userName: 'stranger',
+      gameFieldText: '',
+      pause: false,
+    }, () => {
+      this.init();
+    });
+  }
+
   render() {
     const {
       snake, apple, score, userName, gameFieldText, pause,
@@ -170,7 +188,7 @@ export default class App extends Component {
         }}>
         <Header userName={userName} />
         <div style={{ display: 'flex' }}>
-          <GameButtons pause={pause} onClick={this.pauseGame} />
+          <GameButtons pause={pause} onClickPause={this.pauseGame} onClickNew={this.newGame}/>
           <GameField
             className={'gameField'}
             gameFieldText={gameFieldText}

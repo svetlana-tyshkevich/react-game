@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import React, { Component } from 'react';
 
@@ -6,6 +7,11 @@ import GameField from '../components/GameField.jsx';
 import Score from '../components/Score.jsx';
 import GameButtons from '../components/GameButtons.jsx';
 import './App.css';
+
+import musicSrc from '../assets/sounds/common.mp3';
+import soundEating from '../assets/sounds/eating.mp3';
+import soundNewGame from '../assets/sounds/new-game.mp3';
+import soundEnd from '../assets/sounds/end.mp3';
 
 export default class App extends Component {
   state = {
@@ -26,6 +32,7 @@ export default class App extends Component {
     this.moveTimer = setInterval(() => {
       this.move();
     }, 200);
+    this.playMusic();
   }
 
   componentWillUnmount() {
@@ -35,7 +42,6 @@ export default class App extends Component {
 
   init = () => {
     const { snake } = this.state;
-    console.log('before', snake);
     for (let i = 1; i < this.state.snakeLength; i += 1) {
       const bodyElement = {
         x: snake[0].x - i * this.state.step,
@@ -45,7 +51,6 @@ export default class App extends Component {
     }
     this.generateApple();
     this.setState({ snake });
-    console.log('after', snake);
   };
 
   keyControls = (e) => {
@@ -117,7 +122,10 @@ export default class App extends Component {
     snake.unshift({ x: newHeadX(), y: newHeadY() });
 
     for (let i = 1; i < snake.length; i += 1) {
-      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) this.finishGame();
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+        this.finishGame();
+        this.playSound(soundEnd);
+      }
     }
 
     if (
@@ -126,6 +134,7 @@ export default class App extends Component {
     ) {
       this.generateApple();
       score += 1;
+      this.playSound(soundEating);
     } else {
       snake.pop();
     }
@@ -161,20 +170,39 @@ export default class App extends Component {
   };
 
   newGame = () => {
-    this.setState({
-      snakeLength: 4,
-      snake: [{ x: 330, y: 450 }],
-      step: 15,
-      direction: 'right',
-      apple: {},
-      score: 0,
-      userName: 'stranger',
-      gameFieldText: '',
-      pause: false,
-    }, () => {
-      this.init();
-    });
-  }
+    this.setState(
+      {
+        snakeLength: 4,
+        snake: [{ x: 330, y: 450 }],
+        step: 15,
+        direction: 'right',
+        apple: {},
+        score: 0,
+        userName: 'stranger',
+        gameFieldText: '',
+        pause: false,
+      },
+      () => {
+        this.init();
+        this.moveTimer = setInterval(() => {
+          this.move();
+        }, 200);
+      },
+    );
+    this.playSound(soundNewGame);
+  };
+
+  playMusic = () => {
+    const myAudio = new Audio(musicSrc);
+    myAudio.loop = true;
+    myAudio.autoplay = true;
+  };
+
+  playSound = (source) => {
+    const myAudio = new Audio();
+    myAudio.src = source;
+    myAudio.play();
+  };
 
   render() {
     const {
@@ -188,7 +216,11 @@ export default class App extends Component {
         }}>
         <Header userName={userName} />
         <div style={{ display: 'flex' }}>
-          <GameButtons pause={pause} onClickPause={this.pauseGame} onClickNew={this.newGame}/>
+          <GameButtons
+            pause={pause}
+            onClickPause={this.pauseGame}
+            onClickNew={this.newGame}
+          />
           <GameField
             className={'gameField'}
             gameFieldText={gameFieldText}

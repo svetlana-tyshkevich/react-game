@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './apple.css';
+import appleImg from '../../assets/img/apple.png';
 
 export default class Apple extends Component {
   render() {
@@ -12,7 +13,10 @@ export default class Apple extends Component {
         style={{
           left: `${apple.x}px`,
           top: `${apple.y}px`,
-        }}></div>
+          // backgroundImage: `url(${appleImg})`,
+        }}>
+        <img src={appleImg} alt={'apple'} className={'appleImg'} />
+      </div>
     );
   }
 }

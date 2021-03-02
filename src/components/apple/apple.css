@@ -2,7 +2,12 @@
     width: 15px;
     height: 15px;
     position: relative;
-    background-color: #c50404;
-    border-radius: 50%;
-    border: solid 2px #07802f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appleImg {
+    width: 40px;
+    height: 40px;
 }

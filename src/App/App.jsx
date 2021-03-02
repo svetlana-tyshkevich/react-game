@@ -24,15 +24,19 @@ export default class App extends Component {
     userName: 'stranger',
     gameFieldText: '',
     pause: false,
+    soundMusic: true,
+    soundMusicVolume: 0.3,
+    sounds: true,
+    soundsVolume: 1,
   };
 
   componentDidMount() {
     this.init();
     window.addEventListener('keydown', this.keyControls);
+    this.playMusic();
     this.moveTimer = setInterval(() => {
       this.move();
     }, 200);
-    this.playMusic();
   }
 
   componentWillUnmount() {
@@ -170,6 +174,7 @@ export default class App extends Component {
   };
 
   newGame = () => {
+    clearInterval(this.moveTimer);
     this.setState(
       {
         snakeLength: 4,
@@ -196,12 +201,14 @@ export default class App extends Component {
     const myAudio = new Audio(musicSrc);
     myAudio.loop = true;
     myAudio.autoplay = true;
+    myAudio.volume = this.state.soundMusicVolume;
   };
 
   playSound = (source) => {
     const myAudio = new Audio();
     myAudio.src = source;
     myAudio.play();
+    myAudio.volume = this.state.soundsVolume;
   };
 
   render() {

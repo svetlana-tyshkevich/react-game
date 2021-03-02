@@ -8,7 +8,7 @@ export default class Snake extends Component {
     const { snake } = this.props;
     const snakeBody = snake.map((cell, index) => (
         <div
-          className={'snake-cell'}
+          className={'worm-cell'}
           style={{
             left: `${snake[index].x}px`,
             top: `${snake[index].y}px`,

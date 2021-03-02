@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './apple.css';
-import appleImg from '../../assets/img/apple.png';
+// import appleImg from '../../assets/img/apple.png';
+// import mouseImg from '../../assets/img/mouse.png';
+import groundImg from '../../assets/img/ground.png';
 
 export default class Apple extends Component {
   render() {
@@ -15,7 +17,9 @@ export default class Apple extends Component {
           top: `${apple.y}px`,
           // backgroundImage: `url(${appleImg})`,
         }}>
-        <img src={appleImg} alt={'apple'} className={'appleImg'} />
+        {/* <img src={appleImg} alt={'apple'} className={'appleImg'} /> */}
+        {/* <img src={mouseImg} alt={'mouse'} className={'appleImg'} /> */}
+        <img src={groundImg} alt={'ground'} className={'appleImg'} />
       </div>
     );
   }

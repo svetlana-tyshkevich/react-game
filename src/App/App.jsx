@@ -148,15 +148,17 @@ export default class App extends Component {
       snake, apple, score, userName, gameFieldText,
     } = this.state;
     return (
-      <div style={{ backgroundColor: '#80b6f2' }}>
+      <div style={{ backgroundColor: '#80b6f2', fontFamily: 'Roboto, sanf-serif' }}>
         <Header userName={userName} />
-        <GameField
-          className={'gameField'}
-          gameFieldText={gameFieldText}
-          apple={apple}
-          snake={snake}
-        />
+        <div style={{ display: 'flex' }}>
+          <GameField
+            className={'gameField'}
+            gameFieldText={gameFieldText}
+            apple={apple}
+            snake={snake}
+          />
         <Score score={score} />
+        </div>
       </div>
     );
   }

@@ -2,6 +2,8 @@
         margin: 20px auto;
     width: 600px;
     height: 600px;
+    min-width: 600px;
+    min-height: 600px;
     position: relative;
     background-color: #79b48d;
     border: solid 15px #574c37;

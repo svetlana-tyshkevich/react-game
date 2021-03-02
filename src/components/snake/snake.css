@@ -12,6 +12,7 @@
 .snake-cell:first-child {
     background-color: rgb(177, 80, 80);
     border: solid 1px #751e08;
+    z-index: 20;
 }
 
 /* .snake-cell:nth-child(2) {

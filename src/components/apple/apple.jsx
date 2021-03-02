@@ -18,5 +18,5 @@ export default class Apple extends Component {
 }
 
 Apple.propTypes = {
-  apple: PropTypes.array,
+  apple: PropTypes.object,
 };

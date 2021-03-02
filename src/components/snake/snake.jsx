@@ -19,5 +19,5 @@ export default class Snake extends Component {
 }
 
 Snake.propTypes = {
-  snake: PropTypes.object,
+  snake: PropTypes.array,
 };

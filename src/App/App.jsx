@@ -16,6 +16,7 @@ export default class App extends Component {
     score: 0,
     userName: 'stranger',
     gameFieldText: '',
+    pause: false,
   };
 
   componentDidMount() {
@@ -45,7 +46,7 @@ export default class App extends Component {
   };
 
   keyControls = (e) => {
-    let direction = '';
+    let { direction } = this.state;
     switch (e.keyCode) {
       case 37:
         if (this.state.direction !== 'right') direction = 'left';
@@ -62,6 +63,15 @@ export default class App extends Component {
       case 40:
         if (this.state.direction !== 'up') direction = 'down';
         else direction = 'up';
+        break;
+      case 32:
+        if (this.state.pause === false) this.pauseGame();
+        else {
+          this.moveTimer = setInterval(() => {
+            this.move();
+          }, 200);
+          this.setState({ gameFieldText: '', pause: false });
+        }
         break;
       default:
     }
@@ -103,8 +113,16 @@ export default class App extends Component {
           return snake[0].y < 585 ? snake[0].y + step : 0;
 
         default:
+          return snake[0].y;
       }
     };
+
+    snake.unshift({ x: newHeadX(), y: newHeadY() });
+
+    for (let i = 1; i < snake.length; i += 1) {
+      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) this.finishGame();
+    }
+
     if (
       snake[0].x === this.state.apple.x
       && snake[0].y === this.state.apple.y
@@ -114,12 +132,6 @@ export default class App extends Component {
     } else {
       snake.pop();
     }
-
-    for (let i = 1; i < snake.length; i += 1) {
-      if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) this.finishGame();
-    }
-
-    snake.unshift({ x: newHeadX(), y: newHeadY() });
 
     this.setState({ snake, score });
   };
@@ -136,6 +148,7 @@ export default class App extends Component {
 
   pauseGame = () => {
     clearInterval(this.moveTimer);
+    this.setState({ gameFieldText: 'Pause', pause: true });
   };
 
   finishGame = () => {
@@ -148,7 +161,11 @@ export default class App extends Component {
       snake, apple, score, userName, gameFieldText,
     } = this.state;
     return (
-      <div style={{ backgroundColor: '#80b6f2', fontFamily: 'Roboto, sanf-serif' }}>
+      <div
+        style={{
+          backgroundColor: '#80b6f2',
+          fontFamily: 'Roboto, sanf-serif',
+        }}>
         <Header userName={userName} />
         <div style={{ display: 'flex' }}>
           <GameField
@@ -157,7 +174,7 @@ export default class App extends Component {
             apple={apple}
             snake={snake}
           />
-        <Score score={score} />
+          <Score score={score} />
         </div>
       </div>
     );

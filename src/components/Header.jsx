@@ -50,7 +50,7 @@ function Header() {
 }
 
 Header.propTypes = {
-  userName: PropTypes.array,
+  userName: PropTypes.string,
 };
 
 export default Header;

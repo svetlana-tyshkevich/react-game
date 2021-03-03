@@ -216,9 +216,10 @@ export default class Main extends Component {
     const {
       snake, apple, score, gameFieldText, pause, isEnter,
     } = this.state;
+
     return (
-      <Fullscreen isEnter={true} onChange={this.setIsEnter}>
-        <div style={{ display: 'flex' }} id={'gameContainer'}>
+      <Fullscreen isEnter={isEnter} onChange={this.setIsEnter}>
+        <div style={{ display: 'flex' }} className={'full-screenable-node'}>
           <GameButtons
             pause={pause}
             onClickPause={this.pauseGame}
@@ -235,8 +236,8 @@ export default class Main extends Component {
             variant="contained"
             color="primary"
             className={'flscreenButton'}
-            onclick={() => {
-              this.setIsEnter(true);
+            onClick={() => {
+              this.setState({ isEnter: true });
             }}>
             <FullscreenIcon />
           </Button>

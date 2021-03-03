@@ -1,9 +1,5 @@
-/* eslint-disable no-debugger */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Header from '../components/Header.jsx';
 import Main from '../components/Main.jsx';
@@ -17,9 +13,7 @@ import './App.css';
 export default class App extends Component {
   state = {
     userName: 'stranger',
-    music: true,
     musicVolume: 0.2,
-    sounds: true,
     soundsVolume: 0.9,
   };
 
@@ -50,21 +44,9 @@ export default class App extends Component {
     this.setState({ soundsVolume: value });
   };
 
-  // updateSounds = (value) => {
-  //   this.setState({ sounds: value });
-  // };
-
-  updateMusic = () => {
-    this.setState({ sounds: false });
-  };
-
   render() {
     const {
-      userName,
-      soundsVolume,
-      musicVolume,
-      music,
-      sounds,
+      userName, soundsVolume, musicVolume, music, sounds,
     } = this.state;
     return (
       <div

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -53,10 +52,6 @@ class Settings extends Component {
       soundsVolume,
       updateMusicVolume,
       updateSoundsVolume,
-      //   music,
-      //   sounds,
-      updateMusic,
-    //   updateSounds,
     } = this.props;
 
     const musicVolumeChange = (event, newValue) => {
@@ -189,9 +184,8 @@ class Settings extends Component {
               <Button
                 variant="contained"
                 color="secondary"
-                // onClick={updateMusicVolume}
-                >
-                <VolumeOffIcon />
+                onClick={() => updateMusicVolume(musicVolume === 0 ? 0.2 : 0)}>
+                {musicVolume !== 0 ? <VolumeOffIcon /> : <VolumeUp />}
               </Button>
             </Paper>
 
@@ -217,9 +211,9 @@ class Settings extends Component {
               <Button
                 variant="contained"
                 color="secondary"
-                // onClick={updateSoundsVolume(soundsVolume === 0 ? 0.5 : 0)}
-                >
-                <VolumeOffIcon />
+                onClick={() => updateSoundsVolume(soundsVolume === 0 ? 0.7 : 0)
+                }>
+                {soundsVolume !== 0 ? <VolumeOffIcon /> : <VolumeUp />}
               </Button>
             </Paper>
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -44,7 +45,22 @@ const styles = {
 
 class Settings extends Component {
   render() {
-    const { classes, musicVolume, soundsVolume } = this.props;
+    const {
+      classes,
+      musicVolume,
+      soundsVolume,
+      updateMusicVolume,
+      updateSoundsVolume,
+    } = this.props;
+
+    const musicVolumeChange = (event, newValue) => {
+      updateMusicVolume(newValue / 100);
+    };
+
+    const soundsVolumeChange = (event, newValue) => {
+      updateSoundsVolume(newValue / 100);
+    };
+
     return (
       <div>
         <Typography variant="h3" className={classes.title}>
@@ -146,8 +162,8 @@ class Settings extends Component {
           </div>
           <div>
             <Paper className={classes.setsBox}>
-              <Typography id="continuous-slider" gutterBottom>
-                Music Volume{musicVolume}
+              <Typography id="musicVolume-slider" gutterBottom>
+                Music Volume {musicVolume}
               </Typography>
               <Grid container spacing={2}>
                 <Grid item>
@@ -155,11 +171,9 @@ class Settings extends Component {
                 </Grid>
                 <Grid item xs>
                   <Slider
-                    value={musicVolume}
-                    // onChange={handleChange}
+                    value={musicVolume * 100}
+                    onChange={musicVolumeChange}
                     aria-labelledby="musicVolume-slider"
-                    min={0}
-                    max={1}
                   />
                 </Grid>
                 <Grid item>
@@ -169,7 +183,7 @@ class Settings extends Component {
             </Paper>
 
             <Paper className={classes.setsBox}>
-              <Typography id="continuous-slider" gutterBottom>
+              <Typography id="soundsVolume-slider" gutterBottom>
                 Sounds Volume
               </Typography>
               <Grid container spacing={2}>
@@ -178,9 +192,9 @@ class Settings extends Component {
                 </Grid>
                 <Grid item xs>
                   <Slider
-                    value={soundsVolume}
-                    // onChange={handleChange}
-                    aria-labelledby="continuous-slider"
+                    value={soundsVolume * 100}
+                    onChange={soundsVolumeChange}
+                    aria-labelledby="soundsVolume-slider"
                   />
                 </Grid>
                 <Grid item>
@@ -200,6 +214,8 @@ Settings.propTypes = {
   classes: PropTypes.object,
   musicVolume: PropTypes.number,
   soundsVolume: PropTypes.number,
+  updateMusicVolume: PropTypes.func,
+  updateSoundsVolume: PropTypes.func,
 };
 
 export default withStyles(styles)(Settings);

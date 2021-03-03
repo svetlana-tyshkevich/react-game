@@ -17,20 +17,36 @@ export default class App extends Component {
   state = {
     userName: 'stranger',
     music: true,
-    musicVolume: 0.3,
+    musicVolume: 0.2,
     sounds: true,
-    soundsVolume: 1,
+    soundsVolume: 0.9,
   };
 
   componentDidMount() {
     this.playMusic();
   }
 
+  componentDidUpdate(prevState) {
+    if (this.state.musicVolume !== prevState.musicVolume) {
+      this.musicAudio.pause();
+      this.musicAudio.volume = this.state.musicVolume;
+      this.musicAudio.play();
+    }
+  }
+
   playMusic = () => {
-    const myAudio = new Audio(musicSrc);
-    myAudio.loop = true;
-    myAudio.autoplay = true;
-    myAudio.volume = this.state.musicVolume;
+    this.musicAudio = new Audio(musicSrc);
+    this.musicAudio.loop = true;
+    this.musicAudio.autoplay = true;
+    this.musicAudio.volume = this.state.musicVolume;
+  };
+
+  updateMusicVolume = (value) => {
+    this.setState({ musicVolume: value });
+  };
+
+  updateSoundsVolume = (value) => {
+    this.setState({ soundsVolume: value });
   };
 
   render() {
@@ -45,17 +61,24 @@ export default class App extends Component {
 
           <Route
             path="/"
-            component={Main}
-            musicVolume={musicVolume}
-            soundsVolume={soundsVolume}
+            render={() => (
+              <Main
+                soundsVolume={soundsVolume}
+              />
+            )}
             exact
           />
           <Route path="/stats" component={Statistics} exact />
           <Route
             path="/sets"
-            component={Settings}
-            musicVolume={musicVolume}
-            soundsVolume={soundsVolume}
+            render={() => (
+              <Settings
+                musicVolume={musicVolume}
+                updateMusicVolume={this.updateMusicVolume}
+                soundsVolume={soundsVolume}
+                updateSoundsVolume={this.updateSoundsVolume}
+              />
+            )}
             exact
           />
           <Route path="/help" component={Help} exact />

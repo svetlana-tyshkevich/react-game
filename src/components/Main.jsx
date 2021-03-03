@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import GameField from './GameField.jsx';
 import Score from './Score.jsx';
@@ -21,10 +22,6 @@ export default class Main extends Component {
     userName: 'stranger',
     gameFieldText: '',
     pause: false,
-    music: true,
-    musicVolume: 0.3,
-    sounds: true,
-    soundsVolume: 1,
   };
 
   componentDidMount() {
@@ -33,6 +30,12 @@ export default class Main extends Component {
     this.moveTimer = setInterval(() => {
       this.move();
     }, 200);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.soundsVolume !== prevProps.soundsVolume) {
+      this.soundsAudio.volume = this.props.soundsVolume;
+    }
   }
 
   componentWillUnmount() {
@@ -193,18 +196,18 @@ export default class Main extends Component {
     this.playSound(soundNewGame);
   };
 
-    playSound = (source) => {
-      const myAudio = new Audio();
-      myAudio.src = source;
-      myAudio.play();
-      myAudio.volume = this.state.soundsVolume;
-    };
+  playSound = (source) => {
+    this.soundsAudio = new Audio();
+    this.soundsAudio.src = source;
+    this.soundsAudio.play();
+    this.soundsAudio.volume = this.props.soundsVolume;
+  };
 
-    render() {
-      const {
-        snake, apple, score, gameFieldText, pause,
-      } = this.state;
-      return (
+  render() {
+    const {
+      snake, apple, score, gameFieldText, pause,
+    } = this.state;
+    return (
       <div style={{ display: 'flex' }}>
         <GameButtons
           pause={pause}
@@ -219,6 +222,10 @@ export default class Main extends Component {
         />
         <Score score={score} />
       </div>
-      );
-    }
+    );
+  }
 }
+
+Main.propTypes = {
+  soundsVolume: PropTypes.number,
+};

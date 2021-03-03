@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
@@ -49,8 +50,22 @@ export default class App extends Component {
     this.setState({ soundsVolume: value });
   };
 
+  // updateSounds = (value) => {
+  //   this.setState({ sounds: value });
+  // };
+
+  updateMusic = () => {
+    this.setState({ sounds: false });
+  };
+
   render() {
-    const { userName, soundsVolume, musicVolume } = this.state;
+    const {
+      userName,
+      soundsVolume,
+      musicVolume,
+      music,
+      sounds,
+    } = this.state;
     return (
       <div
         style={{
@@ -61,11 +76,7 @@ export default class App extends Component {
 
           <Route
             path="/"
-            render={() => (
-              <Main
-                soundsVolume={soundsVolume}
-              />
-            )}
+            render={() => <Main soundsVolume={soundsVolume} />}
             exact
           />
           <Route path="/stats" component={Statistics} exact />
@@ -77,6 +88,10 @@ export default class App extends Component {
                 updateMusicVolume={this.updateMusicVolume}
                 soundsVolume={soundsVolume}
                 updateSoundsVolume={this.updateSoundsVolume}
+                music={music}
+                sounds={sounds}
+                updateMusic={this.updateMusic}
+                updateSounds={this.updateSounds}
               />
             )}
             exact

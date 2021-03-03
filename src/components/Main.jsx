@@ -3,9 +3,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Button from '@material-ui/core/Button';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
+import Fullscreen from 'fullscreen-react';
 import GameField from './GameField.jsx';
 import Score from './Score.jsx';
 import GameButtons from './GameButtons.jsx';
+// import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 
 import soundEating from '../assets/sounds/eating.mp3';
 import soundNewGame from '../assets/sounds/new-game.mp3';
@@ -22,6 +26,7 @@ export default class Main extends Component {
     userName: 'stranger',
     gameFieldText: '',
     pause: false,
+    isEnter: false,
   };
 
   componentDidMount() {
@@ -203,25 +208,40 @@ export default class Main extends Component {
     this.soundsAudio.volume = this.props.soundsVolume;
   };
 
+  setIsEnter = () => {
+    this.setState({ isEnter: true });
+  }
+
   render() {
     const {
-      snake, apple, score, gameFieldText, pause,
+      snake, apple, score, gameFieldText, pause, isEnter,
     } = this.state;
     return (
-      <div style={{ display: 'flex' }}>
-        <GameButtons
-          pause={pause}
-          onClickPause={this.pauseGame}
-          onClickNew={this.newGame}
-        />
-        <GameField
-          className={'gameField'}
-          gameFieldText={gameFieldText}
-          apple={apple}
-          snake={snake}
-        />
-        <Score score={score} />
-      </div>
+      <Fullscreen isEnter={true} onChange={this.setIsEnter}>
+        <div style={{ display: 'flex' }} id={'gameContainer'}>
+          <GameButtons
+            pause={pause}
+            onClickPause={this.pauseGame}
+            onClickNew={this.newGame}
+          />
+          <GameField
+            className={'gameField'}
+            gameFieldText={gameFieldText}
+            apple={apple}
+            snake={snake}
+          />
+          <Score score={score} />
+          <Button
+            variant="contained"
+            color="primary"
+            className={'flscreenButton'}
+            onclick={() => {
+              this.setIsEnter(true);
+            }}>
+            <FullscreenIcon />
+          </Button>
+        </div>
+      </Fullscreen>
     );
   }
 }

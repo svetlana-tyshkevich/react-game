@@ -14,6 +14,8 @@ import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
+import Button from '@material-ui/core/Button';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 const styles = {
   container: {
@@ -51,6 +53,10 @@ class Settings extends Component {
       soundsVolume,
       updateMusicVolume,
       updateSoundsVolume,
+      //   music,
+      //   sounds,
+      updateMusic,
+    //   updateSounds,
     } = this.props;
 
     const musicVolumeChange = (event, newValue) => {
@@ -163,7 +169,7 @@ class Settings extends Component {
           <div>
             <Paper className={classes.setsBox}>
               <Typography id="musicVolume-slider" gutterBottom>
-                Music Volume {musicVolume}
+                Music Volume
               </Typography>
               <Grid container spacing={2}>
                 <Grid item>
@@ -180,6 +186,13 @@ class Settings extends Component {
                   <VolumeUp />
                 </Grid>
               </Grid>
+              <Button
+                variant="contained"
+                color="secondary"
+                // onClick={updateMusicVolume}
+                >
+                <VolumeOffIcon />
+              </Button>
             </Paper>
 
             <Paper className={classes.setsBox}>
@@ -201,6 +214,13 @@ class Settings extends Component {
                   <VolumeUp />
                 </Grid>
               </Grid>
+              <Button
+                variant="contained"
+                color="secondary"
+                // onClick={updateSoundsVolume(soundsVolume === 0 ? 0.5 : 0)}
+                >
+                <VolumeOffIcon />
+              </Button>
             </Paper>
           </div>
         </div>
@@ -216,6 +236,10 @@ Settings.propTypes = {
   soundsVolume: PropTypes.number,
   updateMusicVolume: PropTypes.func,
   updateSoundsVolume: PropTypes.func,
+  music: PropTypes.bool,
+  sounds: PropTypes.bool,
+  updateMusic: PropTypes.func,
+  updateSounds: PropTypes.func,
 };
 
 export default withStyles(styles)(Settings);

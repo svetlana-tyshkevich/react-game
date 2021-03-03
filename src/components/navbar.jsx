@@ -6,9 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import StarsIcon from '@material-ui/icons/Stars';
-import RefreshIcon from '@material-ui/icons/Refresh';
+import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpIcon from '@material-ui/icons/Help';
+import { Link } from 'react-router-dom';
 
 const StyledMenu = withStyles({
   paper: {
@@ -68,30 +69,38 @@ export default function CustomizedMenus() {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <RefreshIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="New Game" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <StarsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Statistics" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <SettingsIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Settings" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemIcon>
-            <HelpIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Help" />
-        </StyledMenuItem>
+        <Link to="/">
+          <StyledMenuItem>
+            <ListItemIcon>
+              <EmojiFlagsIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Game" />
+          </StyledMenuItem>
+        </Link>
+        <Link to="/stats">
+          <StyledMenuItem>
+            <ListItemIcon>
+              <StarsIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Statistics" />
+          </StyledMenuItem>
+        </Link>
+        <Link to="/sets">
+          <StyledMenuItem>
+            <ListItemIcon>
+              <SettingsIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Settings" />
+          </StyledMenuItem>
+        </Link>
+        <Link to="/help">
+          <StyledMenuItem>
+            <ListItemIcon>
+              <HelpIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Help" />
+          </StyledMenuItem>
+        </Link>
       </StyledMenu>
     </div>
   );

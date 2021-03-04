@@ -203,14 +203,18 @@ export default class Main extends Component {
     } else {
       this.moveTimer = setInterval(() => {
         this.move();
-      }, 200);
+      }, this.getInterval());
       this.setState({ gameFieldText: '', pause: false });
     }
   };
 
   finishGame = () => {
+    const { stats, userName } = this.props;
+    const { score } = this.state;
     clearInterval(this.moveTimer);
-    this.setState({ gameFieldText: 'Game Over' });
+    stats.push({ userName, score });
+    this.setState({ gameFieldText: 'Game Over', stats });
+    localStorage.setItem('stats', JSON.stringify(stats));
   };
 
   newGame = () => {
@@ -234,7 +238,7 @@ export default class Main extends Component {
       () => {
         this.moveTimer = setInterval(() => {
           this.move();
-        }, 200);
+        }, this.getInterval());
       },
     );
     this.playSound(soundNewGame);
@@ -291,4 +295,6 @@ Main.propTypes = {
   soundsVolume: PropTypes.number,
   character: PropTypes.string,
   speed: PropTypes.string,
+  stats: PropTypes.array,
+  userName: PropTypes.string,
 };

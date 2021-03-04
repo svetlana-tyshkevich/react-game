@@ -16,12 +16,13 @@ import './App.css';
 
 export default class App extends Component {
   state = {
-    userName: 'stranger',
+    userName: '',
     musicVolume: '0',
     soundsVolume: '0.9',
     character: 'caterpillar',
     speed: 'low',
     musicTheme: 'west',
+    stats: [],
   };
 
   componentDidMount() {
@@ -89,6 +90,11 @@ export default class App extends Component {
     localStorage.setItem('musicTheme', JSON.stringify(value));
   };
 
+  updateStats = (value) => {
+    this.setState({ stats: value });
+    localStorage.setItem('stats', JSON.stringify(value));
+  };
+
   render() {
     const {
       userName,
@@ -97,6 +103,7 @@ export default class App extends Component {
       character,
       speed,
       musicTheme,
+      stats,
     } = this.state;
     return (
       <div
@@ -104,7 +111,7 @@ export default class App extends Component {
           backgroundColor: '#80b6f2',
         }}>
         <Router>
-          <Header userName={userName} />
+          <Header userName={userName} stats={stats} />
 
           <Route
             path="/"
@@ -113,11 +120,18 @@ export default class App extends Component {
                 soundsVolume={+soundsVolume}
                 character={character}
                 speed={speed}
+                stats={stats}
+                updateStats={this.updateStats}
+                userName={userName}
               />
             )}
             exact
           />
-          <Route path="/stats" component={Statistics} exact />
+          <Route
+            path="/stats"
+            render={() => <Statistics stats={stats} />}
+            exact
+          />
           <Route
             path="/sets"
             render={() => (

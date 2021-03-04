@@ -5,10 +5,10 @@ import './snake.css';
 
 export default class Snake extends Component {
   render() {
-    const { snake } = this.props;
+    const { snake, character } = this.props;
     const snakeBody = snake.map((cell, index) => (
         <div
-          className={'worm-cell'}
+          className={`${character}-cell`}
           style={{
             left: `${snake[index].x}px`,
             top: `${snake[index].y}px`,
@@ -20,4 +20,5 @@ export default class Snake extends Component {
 
 Snake.propTypes = {
   snake: PropTypes.array,
+  character: PropTypes.string,
 };

@@ -6,15 +6,20 @@ import Main from '../components/Main.jsx';
 import Statistics from '../components/Statistics.jsx';
 import Settings from '../components/Settings.jsx';
 import Help from '../components/Help.jsx';
-import musicSrc from '../assets/sounds/common.mp3';
+import musicWest from '../assets/sounds/west.mp3';
+import musicDrums from '../assets/sounds/drums.mp3';
+import musicFort from '../assets/sounds/fort.mp3';
 
 import './App.css';
 
 export default class App extends Component {
   state = {
     userName: 'stranger',
-    musicVolume: 0.2,
+    musicVolume: 0,
     soundsVolume: 0.9,
+    character: 'caterpillar',
+    speed: 'low',
+    musicTheme: 'west',
   };
 
   componentDidMount() {
@@ -27,9 +32,28 @@ export default class App extends Component {
       this.musicAudio.volume = this.state.musicVolume;
       this.musicAudio.play();
     }
+
+    if (this.state.musicTheme !== prevState.musicTheme) {
+      this.musicAudio.pause();
+      this.playMusic();
+    }
   }
 
   playMusic = () => {
+    let musicSrc = '';
+    switch (this.state.musicTheme) {
+      case 'west':
+        musicSrc = musicWest;
+        break;
+      case 'fort':
+        musicSrc = musicFort;
+        break;
+      case 'drums':
+        musicSrc = musicDrums;
+        break;
+
+      default:
+    }
     this.musicAudio = new Audio(musicSrc);
     this.musicAudio.loop = true;
     this.musicAudio.autoplay = true;
@@ -44,9 +68,26 @@ export default class App extends Component {
     this.setState({ soundsVolume: value });
   };
 
+  updateCharacter = (value) => {
+    this.setState({ character: value });
+  };
+
+  updateSpeed = (value) => {
+    this.setState({ speed: value });
+  };
+
+  updateMusicTheme = (value) => {
+    this.setState({ musicTheme: value });
+  };
+
   render() {
     const {
-      userName, soundsVolume, musicVolume, music, sounds,
+      userName,
+      soundsVolume,
+      musicVolume,
+      character,
+      speed,
+      musicTheme,
     } = this.state;
     return (
       <div
@@ -58,7 +99,13 @@ export default class App extends Component {
 
           <Route
             path="/"
-            render={() => <Main soundsVolume={soundsVolume} />}
+            render={() => (
+              <Main
+                soundsVolume={soundsVolume}
+                character={character}
+                speed={speed}
+              />
+            )}
             exact
           />
           <Route path="/stats" component={Statistics} exact />
@@ -70,10 +117,12 @@ export default class App extends Component {
                 updateMusicVolume={this.updateMusicVolume}
                 soundsVolume={soundsVolume}
                 updateSoundsVolume={this.updateSoundsVolume}
-                music={music}
-                sounds={sounds}
-                updateMusic={this.updateMusic}
-                updateSounds={this.updateSounds}
+                updateCharacter={this.updateCharacter}
+                character={character}
+                updateSpeed={this.updateSpeed}
+                speed={speed}
+                musicTheme={musicTheme}
+                updateMusicTheme={this.updateMusicTheme}
               />
             )}
             exact

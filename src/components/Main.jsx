@@ -27,14 +27,38 @@ export default class Main extends Component {
     gameFieldText: '',
     pause: false,
     isEnter: false,
+    points: 0,
   };
+
+  getInterval = () => {
+    let interval = 0;
+    let points = 0;
+    switch (this.props.speed) {
+      case 'low':
+        interval = 160;
+        points = 10;
+        break;
+      case 'medium':
+        interval = 110;
+        points = 20;
+        break;
+      case 'high':
+        interval = 70;
+        points = 30;
+        break;
+
+      default:
+    }
+    this.setState({ points });
+    return interval;
+  }
 
   componentDidMount() {
     this.init();
     window.addEventListener('keydown', this.keyControls);
     this.moveTimer = setInterval(() => {
       this.move();
-    }, 200);
+    }, this.getInterval());
   }
 
   componentDidUpdate(prevProps) {
@@ -230,6 +254,7 @@ export default class Main extends Component {
             gameFieldText={gameFieldText}
             apple={apple}
             snake={snake}
+            character={this.props.character}
           />
           <Score score={score} />
           <Button
@@ -249,4 +274,6 @@ export default class Main extends Component {
 
 Main.propTypes = {
   soundsVolume: PropTypes.number,
+  character: PropTypes.string,
+  speed: PropTypes.string,
 };

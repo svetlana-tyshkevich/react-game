@@ -6,13 +6,15 @@ import '../App/App.css';
 
 export default class GameField extends Component {
   render() {
-    const { gameFieldText, apple, snake } = this.props;
+    const {
+      gameFieldText, apple, snake, character,
+    } = this.props;
 
     return (
       <div className={'gameField'}>
         <div className={'gameFieldText'}>{gameFieldText}</div>
-        <Apple apple={apple} />
-        <Snake snake={snake} />
+        <Apple apple={apple} character={character} />
+        <Snake snake={snake} character={character} />
       </div>
     );
   }
@@ -22,4 +24,5 @@ GameField.propTypes = {
   gameFieldText: PropTypes.string,
   apple: PropTypes.object,
   snake: PropTypes.array,
+  character: PropTypes.string,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -52,6 +53,12 @@ class Settings extends Component {
       soundsVolume,
       updateMusicVolume,
       updateSoundsVolume,
+      updateCharacter,
+      character,
+      updateSpeed,
+      speed,
+      updateMusicTheme,
+      musicTheme,
     } = this.props;
 
     const musicVolumeChange = (event, newValue) => {
@@ -60,6 +67,19 @@ class Settings extends Component {
 
     const soundsVolumeChange = (event, newValue) => {
       updateSoundsVolume(newValue / 100);
+    };
+
+    const characterChange = (event) => {
+      updateCharacter(event.target.value);
+    };
+
+    const speedChange = (event) => {
+      updateSpeed(event.target.value);
+    };
+
+    const musicThemeChange = (event) => {
+      debugger;
+      updateMusicTheme(event.target.value);
     };
 
     return (
@@ -79,9 +99,8 @@ class Settings extends Component {
                   className={classes.formBox}
                   aria-label="character"
                   name="character1"
-                  //   value={value}
-                  //   onChange={handleChange}
-                >
+                  value={character}
+                  onChange={characterChange}>
                   <FormControlLabel
                     value="snake"
                     control={<Radio />}
@@ -109,9 +128,8 @@ class Settings extends Component {
                   className={classes.formBox}
                   aria-label="speed"
                   name="speed1"
-                  //   value={value}
-                  //   onChange={handleChange}
-                >
+                  value={speed}
+                  onChange={speedChange}>
                   <FormControlLabel
                     value="low"
                     control={<Radio />}
@@ -132,35 +150,35 @@ class Settings extends Component {
             </Paper>
             <Paper className={classes.setsBox}>
               <FormControl component="fieldset">
-                <FormLabel component="legend">Main Song</FormLabel>
+                <FormLabel component="legend">Music Theme</FormLabel>
                 <RadioGroup
                   row
-                  defaultValue="one"
+                  defaultValue="west"
                   className={classes.formBox}
                   aria-label="mainSong"
                   name="mainSong1"
-                  //   value={value}
-                  //   onChange={handleChange}
-                >
+                  value={musicTheme}
+                  onChange={musicThemeChange}>
                   <FormControlLabel
-                    value="one"
+                    value="west"
                     control={<Radio />}
-                    label="One"
+                    label="Wild West"
                   />
                   <FormControlLabel
-                    value="two"
+                    value="fort"
                     control={<Radio />}
-                    label="Two"
+                    label="Fort Boyard"
                   />
                   <FormControlLabel
-                    value="three"
+                    value="drums"
                     control={<Radio />}
-                    label="Three"
+                    label="Drums"
                   />
                 </RadioGroup>
               </FormControl>
             </Paper>
           </div>
+
           <div>
             <Paper className={classes.setsBox}>
               <Typography id="musicVolume-slider" gutterBottom>
@@ -224,16 +242,17 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-  userName: PropTypes.string,
   classes: PropTypes.object,
   musicVolume: PropTypes.number,
   soundsVolume: PropTypes.number,
   updateMusicVolume: PropTypes.func,
   updateSoundsVolume: PropTypes.func,
-  music: PropTypes.bool,
-  sounds: PropTypes.bool,
-  updateMusic: PropTypes.func,
-  updateSounds: PropTypes.func,
+  updateCharacter: PropTypes.func,
+  character: PropTypes.string,
+  updateSpeed: PropTypes.func,
+  speed: PropTypes.string,
+  updateMusicTheme: PropTypes.func,
+  musicTheme: PropTypes.string,
 };
 
 export default withStyles(styles)(Settings);

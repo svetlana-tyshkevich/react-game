@@ -2,17 +2,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {
+  AppBar, Toolbar, Typography,
+} from '@material-ui/core';
+import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 import Navbar from './navbar.jsx';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
+import { gameTheme } from '../themes/theme.jsx';
 
 const styles = {
-  root: {
+  headerRoot: {
     flexGrow: 1,
+    position: 'fixed',
+    top: 0,
   },
   menuButton: {
     marginRight: 20,
@@ -32,23 +33,25 @@ const styles = {
 class Header extends Component {
   render() {
     const { classes, userName, stats } = this.props;
-    const bestScore = stats.sort((a, b) => b.score - a.score)[0].score || 0;
+    const bestScore = stats.sort((a, b) => b.score - a.score)[0]?.score || 0;
 
     return (
-      <AppBar position="static">
-        <Toolbar>
-          <Navbar />
-          <Typography variant="h4" className={classes.title}>
-            Snake Game
-          </Typography>
-          <Typography variant="body1" className={classes.text}>
-            {`Hello, ${userName}!`}
-          </Typography>
-          <Typography variant="body1" className={classes.text}>
-            {`Your best score is ${bestScore}`}
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <ThemeProvider theme={gameTheme}>
+        <AppBar className={classes.headerRoot}>
+          <Toolbar>
+            <Navbar />
+            <Typography variant="h4" className={classes.title}>
+              Snake Game
+            </Typography>
+            <Typography variant="body1" className={classes.text}>
+              {`Hello, ${userName}!`}
+            </Typography>
+            <Typography variant="body1" className={classes.text}>
+              {`Your best score is ${bestScore}`}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+      </ThemeProvider>
     );
   }
 }

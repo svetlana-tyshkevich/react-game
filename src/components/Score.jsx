@@ -10,7 +10,7 @@ const styles = {
     alignItems: 'center',
     width: 250,
     height: 150,
-    margin: 100,
+    margin: 20,
     fontSize: 35,
   },
 };

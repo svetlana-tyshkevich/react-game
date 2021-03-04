@@ -10,7 +10,7 @@ const styles = {
     justifyContent: 'space-between',
     width: 250,
     height: 150,
-    margin: 100,
+    margin: 20,
   },
 };
 

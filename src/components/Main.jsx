@@ -23,7 +23,8 @@ export default class Main extends Component {
       { x: 330, y: 450 },
       { x: 315, y: 450 },
       { x: 300, y: 450 },
-      { x: 285, y: 450 }],
+      { x: 285, y: 450 },
+    ],
     step: 15,
     direction: 'right',
     apple: { x: 60, y: 255 },
@@ -77,20 +78,6 @@ export default class Main extends Component {
     clearInterval(this.moveTimer);
     window.removeEventListener('keydown', this.keyControls);
   }
-
-  // init = () => {
-  // const { snake } = this.state;
-  // for (let i = 1; i < this.state.snakeLength; i += 1) {
-  //   const bodyElement = {
-  //     x: snake[0].x - i * this.state.step,
-  //     y: snake[0].y,
-  //   };
-  //   snake.push(bodyElement);
-  // }
-  // this.generateApple();
-  // this.setState({ snake });
-  // localStorage.setItem('snake', JSON.stringify(snake));
-  // };
 
   keyControls = (e) => {
     let { direction } = this.state;
@@ -261,32 +248,42 @@ export default class Main extends Component {
     } = this.state;
 
     return (
-      <Fullscreen isEnter={isEnter} onChange={this.setIsEnter}>
-        <div style={{ display: 'flex' }} className={'full-screenable-node'}>
-          <GameButtons
-            pause={pause}
-            onClickPause={this.pauseGame}
-            onClickNew={this.newGame}
-          />
-          <GameField
-            className={'gameField'}
-            gameFieldText={gameFieldText}
-            apple={apple}
-            snake={snake}
-            character={this.props.character}
-          />
-          <Score score={score} />
-          <Button
-            variant="contained"
-            color="primary"
-            className={'flscreenButton'}
-            onClick={() => {
-              this.setState({ isEnter: true });
-            }}>
-            <FullscreenIcon />
-          </Button>
-        </div>
-      </Fullscreen>
+      <div style={{ width: '100%' }}>
+        <Fullscreen isEnter={isEnter} onChange={this.setIsEnter}>
+          <div
+            style={{
+              display: 'flex',
+              height: '100%',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              flexWrap: 'wrap',
+            }}
+            className={'full-screenable-node'}>
+            <GameButtons
+              pause={pause}
+              onClickPause={this.pauseGame}
+              onClickNew={this.newGame}
+            />
+            <GameField
+              className={'gameField'}
+              gameFieldText={gameFieldText}
+              apple={apple}
+              snake={snake}
+              character={this.props.character}
+            />
+            <Score score={score} />
+          </div>
+        </Fullscreen>
+        <Button
+          styles={{ position: 'absolute', bottom: '50px', right: '50px' }}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            this.setState({ isEnter: true });
+          }}>
+          <FullscreenIcon />
+        </Button>
+      </div>
     );
   }
 }

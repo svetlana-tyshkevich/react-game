@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
 import Main from '../components/Main.jsx';
 import Statistics from '../components/Statistics.jsx';
 import Settings from '../components/Settings.jsx';
@@ -107,10 +109,9 @@ export default class App extends Component {
     } = this.state;
     return (
       <div
-        style={{
-          backgroundColor: '#80b6f2',
-        }}>
+        className={'app-box'}>
         <Router>
+          <CssBaseline />
           <Header userName={userName} stats={stats} />
 
           <Route
@@ -151,6 +152,7 @@ export default class App extends Component {
             exact
           />
           <Route path="/help" component={Help} exact />
+          <Footer />
         </Router>
       </div>
     );

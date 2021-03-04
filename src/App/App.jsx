@@ -10,19 +10,23 @@ import musicWest from '../assets/sounds/west.mp3';
 import musicDrums from '../assets/sounds/drums.mp3';
 import musicFort from '../assets/sounds/fort.mp3';
 
+import stateInLS from '../utils/stateInLS';
+
 import './App.css';
 
 export default class App extends Component {
   state = {
     userName: 'stranger',
-    musicVolume: 0,
-    soundsVolume: 0.9,
+    musicVolume: '0',
+    soundsVolume: '0.9',
     character: 'caterpillar',
     speed: 'low',
     musicTheme: 'west',
   };
 
   componentDidMount() {
+    const setState = this.setState.bind(this);
+    stateInLS(this.state, setState);
     this.playMusic();
   }
 
@@ -62,22 +66,27 @@ export default class App extends Component {
 
   updateMusicVolume = (value) => {
     this.setState({ musicVolume: value });
+    localStorage.setItem('musicVolume', JSON.stringify(value));
   };
 
   updateSoundsVolume = (value) => {
     this.setState({ soundsVolume: value });
+    localStorage.setItem('soundsVolume', JSON.stringify(value));
   };
 
   updateCharacter = (value) => {
     this.setState({ character: value });
+    localStorage.setItem('character', JSON.stringify(value));
   };
 
   updateSpeed = (value) => {
     this.setState({ speed: value });
+    localStorage.setItem('speed', JSON.stringify(value));
   };
 
   updateMusicTheme = (value) => {
     this.setState({ musicTheme: value });
+    localStorage.setItem('musicTheme', JSON.stringify(value));
   };
 
   render() {
@@ -101,7 +110,7 @@ export default class App extends Component {
             path="/"
             render={() => (
               <Main
-                soundsVolume={soundsVolume}
+                soundsVolume={+soundsVolume}
                 character={character}
                 speed={speed}
               />
@@ -113,9 +122,9 @@ export default class App extends Component {
             path="/sets"
             render={() => (
               <Settings
-                musicVolume={musicVolume}
+                musicVolume={+musicVolume}
                 updateMusicVolume={this.updateMusicVolume}
-                soundsVolume={soundsVolume}
+                soundsVolume={+soundsVolume}
                 updateSoundsVolume={this.updateSoundsVolume}
                 updateCharacter={this.updateCharacter}
                 character={character}

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Fullscreen from 'fullscreen-react';
+import stateInLS from '../utils/stateInLS';
 import GameField from './GameField.jsx';
 import Score from './Score.jsx';
 import GameButtons from './GameButtons.jsx';
@@ -18,12 +19,15 @@ import soundEnd from '../assets/sounds/end.mp3';
 export default class Main extends Component {
   state = {
     snakeLength: 4,
-    snake: [{ x: 330, y: 450 }],
+    snake: [
+      { x: 330, y: 450 },
+      { x: 315, y: 450 },
+      { x: 300, y: 450 },
+      { x: 285, y: 450 }],
     step: 15,
     direction: 'right',
-    apple: {},
+    apple: { x: 60, y: 255 },
     score: 0,
-    userName: 'stranger',
     gameFieldText: '',
     pause: false,
     isEnter: false,
@@ -50,11 +54,13 @@ export default class Main extends Component {
       default:
     }
     this.setState({ points });
+    localStorage.setItem('points', JSON.stringify(points));
     return interval;
-  }
+  };
 
   componentDidMount() {
-    this.init();
+    const setState = this.setState.bind(this);
+    stateInLS(this.state, setState);
     window.addEventListener('keydown', this.keyControls);
     this.moveTimer = setInterval(() => {
       this.move();
@@ -72,18 +78,19 @@ export default class Main extends Component {
     window.removeEventListener('keydown', this.keyControls);
   }
 
-  init = () => {
-    const { snake } = this.state;
-    for (let i = 1; i < this.state.snakeLength; i += 1) {
-      const bodyElement = {
-        x: snake[0].x - i * this.state.step,
-        y: snake[0].y,
-      };
-      snake.push(bodyElement);
-    }
-    this.generateApple();
-    this.setState({ snake });
-  };
+  // init = () => {
+  // const { snake } = this.state;
+  // for (let i = 1; i < this.state.snakeLength; i += 1) {
+  //   const bodyElement = {
+  //     x: snake[0].x - i * this.state.step,
+  //     y: snake[0].y,
+  //   };
+  //   snake.push(bodyElement);
+  // }
+  // this.generateApple();
+  // this.setState({ snake });
+  // localStorage.setItem('snake', JSON.stringify(snake));
+  // };
 
   keyControls = (e) => {
     let { direction } = this.state;
@@ -110,12 +117,12 @@ export default class Main extends Component {
       default:
     }
     this.setState({ direction });
+    localStorage.setItem('direction', JSON.stringify(direction));
   };
 
   move = () => {
-    const { snake } = this.state;
+    const { snake, step, points } = this.state;
     let { score } = this.state;
-    const { step } = this.state;
     const newHeadX = () => {
       switch (this.state.direction) {
         case 'right':
@@ -165,13 +172,17 @@ export default class Main extends Component {
       && snake[0].y === this.state.apple.y
     ) {
       this.generateApple();
-      score += 1;
+      score += points;
       this.playSound(soundEating);
     } else {
       snake.pop();
+      localStorage.setItem('snakeLength', JSON.stringify(snake.length));
     }
 
     this.setState({ snake, score });
+
+    localStorage.setItem('snake', JSON.stringify(snake));
+    localStorage.setItem('score', JSON.stringify(score));
   };
 
   generateApple = () => {
@@ -182,6 +193,7 @@ export default class Main extends Component {
     apple.y = randomPosition() * this.state.step;
 
     this.setState({ apple });
+    localStorage.setItem('apple', JSON.stringify(apple));
   };
 
   pauseGame = () => {
@@ -206,17 +218,20 @@ export default class Main extends Component {
     this.setState(
       {
         snakeLength: 4,
-        snake: [{ x: 330, y: 450 }],
+        snake: [
+          { x: 330, y: 450 },
+          { x: 315, y: 450 },
+          { x: 300, y: 450 },
+          { x: 285, y: 450 },
+        ],
         step: 15,
         direction: 'right',
-        apple: {},
+        apple: { x: 60, y: 255 },
         score: 0,
-        userName: 'stranger',
         gameFieldText: '',
         pause: false,
       },
       () => {
-        this.init();
         this.moveTimer = setInterval(() => {
           this.move();
         }, 200);
@@ -234,7 +249,7 @@ export default class Main extends Component {
 
   setIsEnter = () => {
     this.setState({ isEnter: true });
-  }
+  };
 
   render() {
     const {

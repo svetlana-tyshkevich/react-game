@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -62,11 +61,11 @@ class Settings extends Component {
     } = this.props;
 
     const musicVolumeChange = (event, newValue) => {
-      updateMusicVolume(newValue / 100);
+      updateMusicVolume((newValue / 100).toString());
     };
 
     const soundsVolumeChange = (event, newValue) => {
-      updateSoundsVolume(newValue / 100);
+      updateSoundsVolume((newValue / 100).toString());
     };
 
     const characterChange = (event) => {
@@ -78,7 +77,6 @@ class Settings extends Component {
     };
 
     const musicThemeChange = (event) => {
-      debugger;
       updateMusicTheme(event.target.value);
     };
 

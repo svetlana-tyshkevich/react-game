@@ -97,6 +97,11 @@ export default class App extends Component {
     localStorage.setItem('stats', JSON.stringify(value));
   };
 
+  updateUsername = (value) => {
+    this.setState({ userName: value });
+    localStorage.setItem('userName', JSON.stringify(value));
+  };
+
   render() {
     const {
       userName,
@@ -108,11 +113,14 @@ export default class App extends Component {
       stats,
     } = this.state;
     return (
-      <div
-        className={'app-box'}>
+      <div className={'app-box'}>
         <Router>
           <CssBaseline />
-          <Header userName={userName} stats={stats} />
+          <Header
+            userName={userName}
+            stats={stats}
+            updateUsername={this.updateUsername}
+          />
 
           <Route
             path="/"

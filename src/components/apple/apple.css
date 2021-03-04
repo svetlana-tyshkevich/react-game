@@ -5,9 +5,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: enter 1s;
 }
 
 .appleImg {
     width: 25px;
     height: 25px;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    -webkit-transform: scale(0.3);
+            transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }

@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { createMuiTheme } from '@material-ui/core';
 
-const gameTheme = createMuiTheme({
+export const gameTheme = createMuiTheme({
   palette: {
     type: 'light',
     primary: {
@@ -22,5 +22,3 @@ const gameTheme = createMuiTheme({
     },
   },
 });
-
-export { gameTheme };

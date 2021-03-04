@@ -7,14 +7,19 @@ import '../App/App.css';
 export default class GameField extends Component {
   render() {
     const {
-      gameFieldText, apple, snake, character,
+      gameFieldText,
+      apple,
+      snake,
+      character,
+      isApple,
+      gameIn,
     } = this.props;
 
     return (
       <div className={'gameField'}>
         <div className={'gameFieldText'}>{gameFieldText}</div>
-        <Apple apple={apple} character={character} />
-        <Snake snake={snake} character={character} />
+        {gameIn && isApple && <Apple apple={apple} character={character} />}
+        {gameIn && <Snake snake={snake} character={character} />}
       </div>
     );
   }
@@ -25,4 +30,6 @@ GameField.propTypes = {
   apple: PropTypes.object,
   snake: PropTypes.array,
   character: PropTypes.string,
+  isApple: PropTypes.bool,
+  gameIn: PropTypes.bool,
 };

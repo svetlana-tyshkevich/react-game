@@ -10,7 +10,6 @@ import stateInLS from '../utils/stateInLS';
 import GameField from './GameField.jsx';
 import Score from './Score.jsx';
 import GameButtons from './GameButtons.jsx';
-// import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 
 import soundEating from '../assets/sounds/eating.mp3';
 import soundNewGame from '../assets/sounds/new-game.mp3';
@@ -28,11 +27,13 @@ export default class Main extends Component {
     step: 15,
     direction: 'right',
     apple: { x: 60, y: 255 },
+    isApple: true,
     score: 0,
     gameFieldText: '',
     pause: false,
     isEnter: false,
     points: 0,
+    gameIn: false,
   };
 
   getInterval = () => {
@@ -63,9 +64,7 @@ export default class Main extends Component {
     const setState = this.setState.bind(this);
     stateInLS(this.state, setState);
     window.addEventListener('keydown', this.keyControls);
-    this.moveTimer = setInterval(() => {
-      this.move();
-    }, this.getInterval());
+    if (this.state.gameIn) { this.pauseGame(); }
   }
 
   componentDidUpdate(prevProps) {
@@ -108,7 +107,9 @@ export default class Main extends Component {
   };
 
   move = () => {
-    const { snake, step, points } = this.state;
+    const {
+      snake, step, points, apple,
+    } = this.state;
     let { score } = this.state;
     const newHeadX = () => {
       switch (this.state.direction) {
@@ -158,6 +159,7 @@ export default class Main extends Component {
       snake[0].x === this.state.apple.x
       && snake[0].y === this.state.apple.y
     ) {
+      this.setState({ isApple: false });
       this.generateApple();
       score += points;
       this.playSound(soundEating);
@@ -179,29 +181,32 @@ export default class Main extends Component {
     apple.x = randomPosition() * this.state.step;
     apple.y = randomPosition() * this.state.step;
 
-    this.setState({ apple });
+    this.setState({ apple, isApple: true });
     localStorage.setItem('apple', JSON.stringify(apple));
   };
 
   pauseGame = () => {
-    if (this.state.pause === false) {
-      clearInterval(this.moveTimer);
-      this.setState({ gameFieldText: 'Pause', pause: true });
-    } else {
-      this.moveTimer = setInterval(() => {
-        this.move();
-      }, this.getInterval());
-      this.setState({ gameFieldText: '', pause: false });
+    if (this.state.gameIn) {
+      if (this.state.pause === false) {
+        clearInterval(this.moveTimer);
+        this.setState({ gameFieldText: 'Pause', pause: true });
+      } else {
+        this.moveTimer = setInterval(() => {
+          this.move();
+        }, this.getInterval());
+        this.setState({ gameFieldText: '', pause: false });
+      }
     }
   };
 
   finishGame = () => {
     const { stats, userName } = this.props;
-    const { score } = this.state;
+    const { score, gameIn } = this.state;
     clearInterval(this.moveTimer);
     stats.push({ userName, score });
-    this.setState({ gameFieldText: 'Game Over', stats });
+    this.setState({ gameFieldText: 'Game Over', stats, gameIn: false });
     localStorage.setItem('stats', JSON.stringify(stats));
+    localStorage.setItem('gameIn', JSON.stringify(gameIn));
   };
 
   newGame = () => {
@@ -218,9 +223,11 @@ export default class Main extends Component {
         step: 15,
         direction: 'right',
         apple: { x: 60, y: 255 },
+        isApple: true,
         score: 0,
         gameFieldText: '',
         pause: false,
+        gameIn: true,
       },
       () => {
         this.moveTimer = setInterval(() => {
@@ -244,7 +251,14 @@ export default class Main extends Component {
 
   render() {
     const {
-      snake, apple, score, gameFieldText, pause, isEnter,
+      snake,
+      apple,
+      score,
+      gameFieldText,
+      pause,
+      isEnter,
+      isApple,
+      gameIn,
     } = this.state;
 
     return (
@@ -268,14 +282,16 @@ export default class Main extends Component {
               className={'gameField'}
               gameFieldText={gameFieldText}
               apple={apple}
+              isApple={isApple}
               snake={snake}
               character={this.props.character}
+              gameIn={gameIn}
             />
             <Score score={score} />
           </div>
         </Fullscreen>
         <Button
-          styles={{ position: 'absolute', bottom: '50px', right: '50px' }}
+          style={{ position: 'fixed', bottom: '10vh', right: '3vh' }}
           variant="contained"
           color="primary"
           onClick={() => {

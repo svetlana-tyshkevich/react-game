@@ -16,11 +16,13 @@ export default class GameField extends Component {
     } = this.props;
 
     return (
-      <div className={'gameField'}>
-        <div className={'gameFieldText'}>{gameFieldText}</div>
-        {gameIn && isApple && <Apple apple={apple} character={character} />}
-        {gameIn && <Snake snake={snake} character={character} />}
-      </div>
+
+        <div className={'gameField'}>
+          <div className={'gameFieldText'}>{gameFieldText}</div>
+          {gameIn && isApple && <Apple apple={apple} character={character} />}
+          {gameIn && <Snake snake={snake} character={character} />}
+        </div>
+
     );
   }
 }

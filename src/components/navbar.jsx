@@ -72,7 +72,7 @@ export default function CustomizedMenus() {
           open={Boolean(anchorEl)}
           onClose={handleClose}>
           <Link to="/">
-            <StyledMenuItem>
+            <StyledMenuItem onClick={handleClose}>
               <ListItemIcon>
                 <EmojiFlagsIcon fontSize="small" />
               </ListItemIcon>
@@ -80,7 +80,7 @@ export default function CustomizedMenus() {
             </StyledMenuItem>
           </Link>
           <Link to="/stats">
-            <StyledMenuItem>
+            <StyledMenuItem onClick={handleClose}>
               <ListItemIcon>
                 <StarsIcon fontSize="small" />
               </ListItemIcon>
@@ -88,7 +88,7 @@ export default function CustomizedMenus() {
             </StyledMenuItem>
           </Link>
           <Link to="/sets">
-            <StyledMenuItem>
+            <StyledMenuItem onClick={handleClose}>
               <ListItemIcon>
                 <SettingsIcon fontSize="small" />
               </ListItemIcon>
@@ -96,7 +96,7 @@ export default function CustomizedMenus() {
             </StyledMenuItem>
           </Link>
           <Link to="/help">
-            <StyledMenuItem>
+            <StyledMenuItem onClick={handleClose}>
               <ListItemIcon>
                 <HelpIcon fontSize="small" />
               </ListItemIcon>

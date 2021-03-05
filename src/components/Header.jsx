@@ -30,9 +30,6 @@ const styles = {
     fontSize: 20,
   },
 
-  form: {
-    color: '#fff',
-  },
 };
 
 class Header extends Component {
@@ -60,7 +57,7 @@ class Header extends Component {
               label="Name"
               value={userName}
               onChange={nameChange}
-              className={classes.form}
+              color="primary"
             />
             <Typography variant="body1" className={classes.text}>
               {`Your best score is ${bestScore}`}

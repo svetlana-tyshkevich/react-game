@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, ThemeProvider } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { gameTheme } from '../themes/theme.jsx';
 
 const styles = {
   buttonsBox: {
@@ -21,6 +22,7 @@ class GameButtons extends Component {
     } = this.props;
 
     return (
+      <ThemeProvider theme={gameTheme}>
       <div className={classes.buttonsBox}>
         <Button variant="contained" color="secondary" onClick={onClickNew}>
           New Game
@@ -29,6 +31,7 @@ class GameButtons extends Component {
           {pause ? 'Continue' : 'Pause'}
         </Button>
       </div>
+      </ThemeProvider>
     );
   }
 }

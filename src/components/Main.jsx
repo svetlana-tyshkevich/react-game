@@ -64,7 +64,6 @@ export default class Main extends Component {
     const setState = this.setState.bind(this);
     stateInLS(this.state, setState);
     window.addEventListener('keydown', this.keyControls);
-    if (this.state.gameIn) { this.pauseGame(); }
   }
 
   componentDidUpdate(prevProps) {
@@ -293,7 +292,7 @@ export default class Main extends Component {
         <Button
           style={{ position: 'fixed', bottom: '10vh', right: '3vh' }}
           variant="contained"
-          color="primary"
+          color="secondary"
           onClick={() => {
             this.setState({ isEnter: true });
           }}>

@@ -15,7 +15,8 @@ export const gameTheme = createMuiTheme({
       paper: '#d4deec',
     },
     text: {
-      primary: '#5a3a2f',
+      primary: '#373231',
+      secondary: '#ffffff',
     },
     info: {
       main: '#683ea2',

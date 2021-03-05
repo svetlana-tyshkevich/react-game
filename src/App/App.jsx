@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
@@ -11,6 +12,7 @@ import Help from '../components/Help.jsx';
 import musicWest from '../assets/sounds/west.mp3';
 import musicDrums from '../assets/sounds/drums.mp3';
 import musicFort from '../assets/sounds/fort.mp3';
+import { gameTheme } from '../themes/theme.jsx';
 
 import stateInLS from '../utils/stateInLS';
 
@@ -113,56 +115,58 @@ export default class App extends Component {
       stats,
     } = this.state;
     return (
-      <div className={'app-box'}>
-        <Router>
-          <CssBaseline />
-          <Header
-            userName={userName}
-            stats={stats}
-            updateUsername={this.updateUsername}
-          />
+      <ThemeProvider theme={gameTheme}>
+        <div className={'app-box'}>
+          <Router>
+            <CssBaseline />
+            <Header
+              userName={userName}
+              stats={stats}
+              updateUsername={this.updateUsername}
+            />
 
-          <Route
-            path="/"
-            render={() => (
-              <Main
-                soundsVolume={+soundsVolume}
-                character={character}
-                speed={speed}
-                stats={stats}
-                updateStats={this.updateStats}
-                userName={userName}
-              />
-            )}
-            exact
-          />
-          <Route
-            path="/stats"
-            render={() => <Statistics stats={stats} />}
-            exact
-          />
-          <Route
-            path="/sets"
-            render={() => (
-              <Settings
-                musicVolume={+musicVolume}
-                updateMusicVolume={this.updateMusicVolume}
-                soundsVolume={+soundsVolume}
-                updateSoundsVolume={this.updateSoundsVolume}
-                updateCharacter={this.updateCharacter}
-                character={character}
-                updateSpeed={this.updateSpeed}
-                speed={speed}
-                musicTheme={musicTheme}
-                updateMusicTheme={this.updateMusicTheme}
-              />
-            )}
-            exact
-          />
-          <Route path="/help" component={Help} exact />
-          <Footer />
-        </Router>
-      </div>
+            <Route
+              path="/"
+              render={() => (
+                <Main
+                  soundsVolume={+soundsVolume}
+                  character={character}
+                  speed={speed}
+                  stats={stats}
+                  updateStats={this.updateStats}
+                  userName={userName}
+                />
+              )}
+              exact
+            />
+            <Route
+              path="/stats"
+              render={() => <Statistics stats={stats} />}
+              exact
+            />
+            <Route
+              path="/sets"
+              render={() => (
+                <Settings
+                  musicVolume={+musicVolume}
+                  updateMusicVolume={this.updateMusicVolume}
+                  soundsVolume={+soundsVolume}
+                  updateSoundsVolume={this.updateSoundsVolume}
+                  updateCharacter={this.updateCharacter}
+                  character={character}
+                  updateSpeed={this.updateSpeed}
+                  speed={speed}
+                  musicTheme={musicTheme}
+                  updateMusicTheme={this.updateMusicTheme}
+                />
+              )}
+              exact
+            />
+            <Route path="/help" component={Help} exact />
+            <Footer />
+          </Router>
+        </div>
+      </ThemeProvider>
     );
   }
 }

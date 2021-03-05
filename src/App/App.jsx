@@ -5,10 +5,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
-import Main from '../components/Main.jsx';
-import Statistics from '../components/Statistics.jsx';
-import Settings from '../components/Settings.jsx';
-import Help from '../components/Help.jsx';
+import Main from '../pages/Main.jsx';
+import Statistics from '../pages/Statistics.jsx';
+import Settings from '../pages/Settings.jsx';
+import Help from '../pages/Help.jsx';
 import musicWest from '../assets/sounds/west.mp3';
 import musicDrums from '../assets/sounds/drums.mp3';
 import musicFort from '../assets/sounds/fort.mp3';
@@ -21,8 +21,8 @@ import './App.css';
 export default class App extends Component {
   state = {
     userName: '',
-    musicVolume: '0',
-    soundsVolume: '0.9',
+    musicVolume: 0,
+    soundsVolume: 0.9,
     character: 'caterpillar',
     speed: 'low',
     musicTheme: 'west',

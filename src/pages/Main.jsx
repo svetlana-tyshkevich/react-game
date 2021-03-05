@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable consistent-return */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,9 +5,9 @@ import Button from '@material-ui/core/Button';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import Fullscreen from 'fullscreen-react';
 import stateInLS from '../utils/stateInLS';
-import GameField from './GameField.jsx';
-import Score from './Score.jsx';
-import GameButtons from './GameButtons.jsx';
+import GameField from '../components/GameField.jsx';
+import Score from '../components/Score.jsx';
+import GameButtons from '../components/GameButtons.jsx';
 
 import soundEating from '../assets/sounds/eating.mp3';
 import soundNewGame from '../assets/sounds/new-game.mp3';
@@ -107,7 +105,7 @@ export default class Main extends Component {
 
   move = () => {
     const {
-      snake, step, points, apple,
+      snake, step, points,
     } = this.state;
     let { score } = this.state;
     const newHeadX = () => {

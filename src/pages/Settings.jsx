@@ -38,11 +38,6 @@ const styles = {
     flexWrap: 'wrap',
     margin: 30,
   },
-  formBox: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'space-around',
-  },
 };
 
 class Settings extends Component {

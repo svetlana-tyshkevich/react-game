@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -45,7 +44,7 @@ class Header extends Component {
 
     return (
       <ThemeProvider theme={gameTheme}>
-        <AppBar className={classes.headerRoot}>
+        <AppBar className={classes.headerRoot} color="secondary">
           <Toolbar>
             <Navbar />
             <Typography variant="h4" className={classes.title}>

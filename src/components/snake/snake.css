@@ -4,7 +4,6 @@
     height: 15px;
     background-color: rgb(83, 89, 97);
     position: absolute;
-    /* box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.8); */
 }
 
 .snake-cell:first-child {

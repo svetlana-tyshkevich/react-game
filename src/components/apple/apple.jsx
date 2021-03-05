@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './apple.css';
@@ -9,7 +8,6 @@ import groundImg from '../../assets/img/ground.png';
 export default class Apple extends Component {
   render() {
     const { apple, character } = this.props;
-    // eslint-disable-next-line consistent-return
     let mealSrc = '';
     switch (character) {
       case 'snake':
